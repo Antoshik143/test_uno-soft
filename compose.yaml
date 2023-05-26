@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+
+  cassandra1:
+    image: cassandra:4.0
+    container_name: cassandra1
+    restart: always
+    networks:
+      new_network:
+        ipv4_address: 172.20.40.2
+    environment:
+      - CASSANDRA_CLUSTER_NAME=Cluster
+      - CASSANDRA_SEEDS=cassandra1,cassandra2,cassandra3
+    ports:
+      - 9043:9042
+
+  cassandra2:
+    image: cassandra:4.0
+    container_name: cassandra2
+    restart: always
+    networks:
+      new_network:
+        ipv4_address: 172.20.40.3
+    environment:
+      - CASSANDRA_CLUSTER_NAME=Cluster
+      - CASSANDRA_SEEDS=cassandra1,cassandra2,cassandra3
+    ports:
+      - 9044:9042
+
+  cassandra3:
+    image: cassandra:4.0
+    container_name: cassandra3
+    restart: always
+    networks:
+      new_network:
+        ipv4_address: 172.20.40.4
+    environment:
+      - CASSANDRA_CLUSTER_NAME=Cluster
+      - CASSANDRA_SEEDS=cassandra1,cassandra2,cassandra3
+    ports:
+      - 9045:9042
+
+networks:
+  new_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.40.0/24
+  
+      
